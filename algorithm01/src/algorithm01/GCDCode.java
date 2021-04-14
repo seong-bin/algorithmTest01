@@ -8,7 +8,7 @@ public class GCDCode {
 		// TODO Auto-generated method stub
 
 	}
-	//ÃÖ´ë°ø¾à¼ö ¼öÇÏ´Â ÄÚµå
+	//ìµœëŒ€ê³µì•½ìˆ˜ ìˆ˜í•˜ëŠ” ì½”ë“œ
 	public static int gcd(int a, int b) {
 		return 0;
 	}

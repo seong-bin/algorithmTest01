@@ -1,30 +1,54 @@
 package algorithm01;
 
-//ÇÁ·Î±×·¡¸Ó½º ´Ù¸®¸¦ Áö³ª´Â Æ®·°
-//Æ®·° ¿©·¯ ´ë°¡ °­À» °¡·ÎÁö¸£´Â ÀÏ Â÷¼± ´Ù¸®¸¦ Á¤ÇØÁø ¼øÀ¸·Î °Ç³Ê·Á ÇÕ´Ï´Ù. 
-//¸ğµç Æ®·°ÀÌ ´Ù¸®¸¦ °Ç³Ê·Á¸é ÃÖ¼Ò ¸î ÃÊ°¡ °É¸®´ÂÁö ¾Ë¾Æ³»¾ß ÇÕ´Ï´Ù. 
-//Æ®·°Àº 1ÃÊ¿¡ 1¸¸Å­ ¿òÁ÷ÀÌ¸ç, ´Ù¸® ±æÀÌ´Â bridge_lengthÀÌ°í ´Ù¸®´Â ¹«°Ô weight±îÁö °ßµö´Ï´Ù.
-//¡Ø Æ®·°ÀÌ ´Ù¸®¿¡ ¿ÏÀüÈ÷ ¿À¸£Áö ¾ÊÀº °æ¿ì, ÀÌ Æ®·°ÀÇ ¹«°Ô´Â °í·ÁÇÏÁö ¾Ê½À´Ï´Ù.
+import java.util.LinkedList;
+import java.util.Queue;
+
+//í”„ë¡œê·¸ë˜ë¨¸ìŠ¤ ë‹¤ë¦¬ë¥¼ ì§€ë‚˜ëŠ” íŠ¸ëŸ­
+//íŠ¸ëŸ­ ì—¬ëŸ¬ ëŒ€ê°€ ê°•ì„ ê°€ë¡œì§€ë¥´ëŠ” ì¼ ì°¨ì„  ë‹¤ë¦¬ë¥¼ ì •í•´ì§„ ìˆœìœ¼ë¡œ ê±´ë„ˆë ¤ í•©ë‹ˆë‹¤. 
+//ëª¨ë“  íŠ¸ëŸ­ì´ ë‹¤ë¦¬ë¥¼ ê±´ë„ˆë ¤ë©´ ìµœì†Œ ëª‡ ì´ˆê°€ ê±¸ë¦¬ëŠ”ì§€ ì•Œì•„ë‚´ì•¼ í•©ë‹ˆë‹¤. 
+//íŠ¸ëŸ­ì€ 1ì´ˆì— 1ë§Œí¼ ì›€ì§ì´ë©°, ë‹¤ë¦¬ ê¸¸ì´ëŠ” bridge_lengthì´ê³  ë‹¤ë¦¬ëŠ” ë¬´ê²Œ weightê¹Œì§€ ê²¬ë”¥ë‹ˆë‹¤.
+//â€» íŠ¸ëŸ­ì´ ë‹¤ë¦¬ì— ì™„ì „íˆ ì˜¤ë¥´ì§€ ì•Šì€ ê²½ìš°, ì´ íŠ¸ëŸ­ì˜ ë¬´ê²ŒëŠ” ê³ ë ¤í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.
 public class TruckPassBridge {
 
 	public static void main(String[] args) {
-		int time = solution(2, 10, new int[] {7,4,5,6});
-		System.out.println("¸ğµç Æ®·°ÀÌ °Ç³Ê´Âµ¥ °É¸° ½Ã°£ = "+time);
+//		int time = solution(2, 10, new int[] {7,4,5,6});
+		int time = solution(100, 100, new int[] {10});
+//		int time = solution(100, 100, new int[] {10,10,10,10,10,10,10,10,10,10});
+		System.out.println("ëª¨ë“  íŠ¸ëŸ­ì´ ê±´ë„ˆëŠ”ë° ê±¸ë¦° ì‹œê°„ = "+time);
 
 	}
-	//´Ù¸® ±æÀÌ bridge_length
-	//´Ù¸®°¡ °ßµô ¼ö ÀÖ´Â ¹«°Ô weight
-	//Æ®·°º° ¹«°Ô truck_weights
+	//ë‹¤ë¦¬ ê¸¸ì´ bridge_length
+	//ë‹¤ë¦¬ê°€ ê²¬ë”œ ìˆ˜ ìˆëŠ” ë¬´ê²Œ weight
+	//íŠ¸ëŸ­ë³„ ë¬´ê²Œ truck_weights
 	public static int solution(int bridge_length, int weight, int[] truck_weights) {
         int answer = 0;
-        int sec = 0;
-        int[] passTruck = new int[truck_weights.length];
-
-        while(passTruck.length == truck_weights.length) {
-        	
+        int tot = 0;
+        Queue<Integer> q = new LinkedList<Integer>();
+        for(int truck : truck_weights) {
+        	while(true) {
+        		if(q.isEmpty()) {
+        			answer++;
+        			q.offer(truck);
+        			tot += truck;
+        			break;
+        		}else if(q.size() == bridge_length) {
+        			tot -= q.poll();
+        		}else {
+        			if(tot + truck > weight) {
+        				answer++;
+        				q.offer(0);
+        			}else {
+        				answer++;
+        				q.offer(truck);
+        				tot += truck;
+        				break;
+        			}
+        		}
+        		
+        	}
         }
         
-        return answer;
+        return answer+bridge_length;
     }
 
 }

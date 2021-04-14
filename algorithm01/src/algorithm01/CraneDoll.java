@@ -7,13 +7,13 @@ public class CraneDoll {
 	public static void main(String[] args) {
 		int solution = solution(new int[][] {{0,0,0,0,0},{0,0,1,0,3},{0,2,5,0,1},{4,2,4,4,2},{3,5,1,3,1}}
 		, new int[] {1,5,3,5,1,2,1,4});
-		System.out.println("»ç¶óÁø ÀÎÇüÀÇ °³¼ö = "+solution);
+		System.out.println(" "+solution);
 
 	}
 
 	public static int solution(int[][] board, int[] moves) {
         int answer = 0;
-        //stack ÈÄÀÔ¼±Ãâ ÀÚ·á±¸Á¶
+        //stack í›„ì…ì„ ì¶œ ìë£Œêµ¬ì¡°
         Stack<Integer> stack = new Stack<>();
         stack.push(0);
         for(int move : moves) {
