@@ -11,9 +11,13 @@ public class DigitsAdd {
 	}
 	public static int solution(int n) {
         int answer = 0;
-        String[] strNum = String.valueOf(n).split("");
-        for(String num : strNum) {
-        	answer += Integer.parseInt(num);
+//        String[] strNum = String.valueOf(n).split("");
+//        for(String num : strNum) {
+//        	answer += Integer.parseInt(num);
+//        }
+        while(n > 0) {
+        	answer += n % 10;
+        	n /= 10;
         }
         
         return answer;
