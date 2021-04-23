@@ -13,19 +13,21 @@ import java.util.HashSet;
 	//[0, 1, 1]으로는 소수 [11, 101]를 만들 수 있습니다.
 	//11과 011은 같은 숫자로 취급합니다.
 public class PrimeNumFind {
-	private static int c = 0;
 	private static HashSet<Integer> primeNumber = new HashSet<> ();
 	
 	public static void main(String[] args) {
+//		int solution = solution("17");
 		int solution = solution("123");
 		System.out.println("만들 수 있는 소수의 개수 = "+solution);
-		System.out.println("cnt = "+c);
-//		System.out.println("check = "+primeNumCheck("110"));
 	}
 	public static int solution(String numbers) {
         int answer = 0;
-        for(int i=0; i<numbers.length(); i++) {
-        	primeNumCnt(numbers, String.valueOf(numbers.charAt(i)), i, 0);
+        String[] numStrs = numbers.split("");
+        System.out.println(numStrs[1]);
+        for(int i=0; i<numStrs.length; i++) {
+        	boolean[] check = new boolean[numStrs.length];
+        	check[i] = true;
+        	primeNumCnt(numStrs, numStrs[i], 1, check);
         }
         answer = primeNumber.size();
         for(int h : primeNumber) {
@@ -33,29 +35,25 @@ public class PrimeNumFind {
         }
         return answer;
     }
-	public static void primeNumCnt(String numbers, String number,  int index, int count) {
-		c++;
-		String str = "";
-		if(count != numbers.length()) {
-			str += number;
-			System.out.println("str = "+str);
-			if(primeNumCheck(str)) {
-				primeNumber.add(Integer.parseInt(str));
-			}
-			for(int i=0; i<numbers.length(); i++) {
-				if(i != index) {
-					primeNumCnt(numbers, str + String.valueOf(numbers.charAt(i)), index+i, count+1);
-				}
+	public static void primeNumCnt(String[] numStrs, String number, int length, boolean[] check) {
+		System.out.println("number = "+number);
+		if(primeNumCheck(Integer.parseInt(number))) {
+			primeNumber.add(Integer.parseInt(number));
+		}
+		for(int i=0; i<numStrs.length; i++) {
+			if(!check[i]) {
+				check[i] = true;
+				primeNumCnt(numStrs, number+numStrs[i], length+1, check);
+				check[i] = false;
 			}
 		}
 	}
 	
-	public static boolean primeNumCheck(String nums) {
-		int num = Integer.parseInt(nums);
+	public static boolean primeNumCheck(int num) {
 		if(num == 0 || num == 1) {
 			return false;
 		}else {
-    		for(int i=2; i<num; i++) {
+    		for(int i=2; i<Math.sqrt(num); i++) {
     			if(num%i == 0) {
     				return false;
     			}
