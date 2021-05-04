@@ -16,7 +16,7 @@ public class TargetNumber {
 	private static int cnt = 0;
 	public static void main(String[] args) {
 //		int solution = solution(new int[] {1, 1, 1, 1, 1}, 3);
-		int solution = solution(new int[] {1, 1, 1}, 1);
+		int solution = solution(new int[] {1, 1, 1, 1}, 2);
 //		int solution = solution(new int[] {1,2,3,4,5}, 7);
 		System.out.println("타겟 넘버를 만드는 방법의 수 = "+solution);
 		System.out.println("cnt = "+cnt);
